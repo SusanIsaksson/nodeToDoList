@@ -1,0 +1,10 @@
+/Denna sida är bara i test syfter - check av alla end-points
+//Denna ska alltid vara med i våra projekt för test vid inlämning
+GET http://localhost:3000
+
+POST http://localhost:3000/api/confirmOrder
+Content-Type: application/json
+{
+    productName: "Iphone",
+    price: 4000
+}
