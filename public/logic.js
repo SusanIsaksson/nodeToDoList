@@ -1,39 +1,45 @@
-let bodyDiv = document.getElementById('bodyTodo') // hämtar bodydiv
+let bodyDiv = document.getElementById('body') // hämtar bodydiv
 
-let inputTodo = document.createElement('input')
-let placeHolder = document.createElement('placeholder')
-placeHolder.innerText = "Skriv ny Todo här..."
+let saveTodoBtn = document.createElement('button') //skapar knapp
+let saveTodoText = document.createElement('h3') // skapar text på knapp
+saveTodoText.innerText = "Spara" // text på knapp
 
+bodyDiv.appendChild(saveTodoBtn)
+saveTodoBtn.appendChild(saveTodoText)
 
-bodyDiv.appendChild(inputTodo)
-inputTodo.appendChild(placeHolder)
+saveTodoBtn.onclick = async function() {
 
-let saveToDoBtn = document.createElement('button') //skapar knapp
-let saveToDoText = document.createElement('h3') // skapar text på knapp
-saveToDoText.innerText = "Spara" // text på knapp
+    let todoInput = document.getElementById('someValue').value 
+    console.log(todoInput)
 
-bodyDiv.appendChild(saveToDoBtn)
-saveToDoBtn.appendChild(saveToDoText)
-
-saveToDoBtn.onclick = async function() {
-    const status = await makeRequest("http://localhost:3000/api", "POST", {todoList: "Learn node Express"})
+    const status = await makeRequest("http://localhost:3000/api", "POST", {todoList: todoInput})
 
     console.log(status)
 }
 
 //------GET ------------------------------
 
-let getToDoBtn = document.createElement('button')
-let getToDoText = document.createElement('h3')
-getToDoText.innerText = "Hämta Todo"
+let getTodoBtn = document.createElement('button')  //skapar knapp
+let getTodoText = document.createElement('h3')     // skapar h4
+getTodoText.innerText = "Hämta Todo"           //text på knapp
 
-bodyDiv.appendChild(getToDoBtn)
-getToDoBtn.appendChild(getToDoText)
+bodyDiv.appendChild(getTodoBtn)
+getTodoBtn.appendChild(getTodoText)
 
-getToDoBtn.onclick = async function() {
-    const showTodo = await makeRequest("http://localhost:3000/api", "GET")
-    const header = document.getElementsByTagName("h1")[0]
-    header.innerText = showTodo
+    getTodoBtn.onclick = async function() {
+        const showTodoList = await makeRequest("http://localhost:3000/api", "GET")
+        console.log(showTodoList)
+
+        for (let i = 0; i < showTodoList.length; i++) {
+            
+            const todoShow = document.createElement('div')
+            todoShow.innerText = showTodoList[i].todoList
+            //console.log(showTodo[i])
+            console.log(todoShow)
+
+            document.getElementById('todoDiv').appendChild(todoShow) 
+        }
+        
 
     //console.log("Hämtar ToDO - klickad")
 }

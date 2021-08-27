@@ -10,7 +10,7 @@ server.get('/api', (req, res) => {
     let todoItem = JSON.parse(raw)
     //res.json(req.body)
     res.json(todoItem)  //ersatt .send med .json pga undefined
-    res.render('index', {todoItem: todoItem, complete: complete});
+    //res.render('index', {todoItem: todoItem, complete: complete});
     
 })
 
@@ -20,16 +20,13 @@ server.post('/api', (req, res) => {
         let todoItem = JSON.parse(raw)
         todoItem.push(req.body)
         fs.writeFileSync("todos.json", JSON.stringify(todoItem))
-        res.json(todoItem)
 
     } catch(err) {
-
+        console.error(err)
     }
 })
 
 server.use(express.static('public'))
 
-server.listen(port, () => {
-  console.log(`App funkar`)
-})
+server.listen(port, () => console.log(`App funkar`))
 
